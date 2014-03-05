@@ -21,49 +21,84 @@
 
    <!-- Modal -->
    <div class="modal" id="movie" tabindex="-1" role="dialog">
-     <div class="modal-dialog">
+     <div class="modal-dialog modal-lg">
        <div class="modal-content">
          <div class="modal-header">
             
            <button type="button" class="close" data-dismiss="modal">&times;</button>
            <h3 class="modal-title" id="movie_title"></h3>
-           <small id="movie_plot_outline"></small>
+           <small id="movie_title_original"></small>
            
          </div>
          <div class="modal-body">
             
             <div class=row>
-               <div class="col-md-6">
-                  <p>
-                     <strong>Titel (Original): </strong> <span id="movie_title_original"></span><br/>
-                     <strong>Country: </strong> <span id="movie_country"></span><br/>
-                     <strong>Director: </strong> <span id="movie_director"></span><br/>
-                     <strong>Writer: </strong> <span id="movie_writers"></span><br/>
-                     <strong>Studio: </strong> <span id="movie_studio"></span><br/>
-                     <strong>Genre: </strong> <span id="movie_genre"></span><br/>
-                     <strong>Year: </strong> <span id="movie_year"></span><br/>
-                     <strong>Runtime: </strong> <span id="movie_runtime"></span><br/>
-                     <strong>Rating: </strong> <span id="movie_rating"></span>&nbsp;(<span id="movie_rating_votes"></span> Votes)<br/>
-                     <strong>MPAA: </strong> <span id="movie_mpaa"></span><br/>
-                  </p>
+               <div class="col-md-4">
+                  <p><img alt="poster" src="#" id="movie_poster" style="width:100%;height:auto;" /></p>
                </div>
-               <div class="col-md-6 text-right">
-                  <p><img alt="poster" src="#" id="movie_poster" style="width:250px;height:auto;" /></p>
+               <div class="col-md-8">
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Country:</strong></div>
+                     <div class="col-md-10" id="movie_country">></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Director:</strong></div>
+                     <div class="col-md-10" id="movie_director"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Writer:</strong></div>
+                     <div class="col-md-10" id="movie_writers"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Studio:</strong></div>
+                     <div class="col-md-10" id="movie_studio"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Genre:</strong></div>
+                     <div class="col-md-10" id="movie_genre"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Year:</strong></div>
+                     <div class="col-md-10" id="movie_year"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Runtime:</strong></div>
+                     <div class="col-md-10" id="movie_runtime"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Rating:</strong></div>
+                     <div class="col-md-10" id="movie_rating"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>MPAA:</strong></div>
+                     <div class="col-md-10" id="movie_mpaa"></div>
+                  </div>
+                  <div class="row">
+                     &nbsp;
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Plot:</strong></div>
+                     <div class="col-md-10 text-justify" id="movie_plot"></div>
+                  </div>
+                  
+                  <!--
+                        <strong>Director: </strong> <span id="movie_director"></span><br/>
+                        <strong>Writer: </strong> <span id="movie_writers"></span><br/>
+                        <strong>Studio: </strong> <span id="movie_studio"></span><br/>
+                        <strong>Genre: </strong> <span id="movie_genre"></span><br/>
+                        <strong>Year: </strong> <span id="movie_year"></span><br/>
+                        <strong>Runtime: </strong> <span id="movie_runtime"></span><br/>
+                        <strong>Rating: </strong> <span id="movie_rating"></span>&nbsp;(<span id="movie_rating_votes"></span> Votes)<br/>
+                        <strong>MPAA: </strong> <span id="movie_mpaa"></span><br/>
+                        <strong>Plot:</strong><span class="text-justify" id="movie_plot"></span>
+                  -->
                </div>
             </div>
-            
+
             <div class="row">
                <div class="col-md-12">
-                  <strong>Plot:</strong>
-                  <p class="text-justify" id="movie_plot"></p>
-               </div>
-            </div>
-         </div>
-         
-         <div class="modal-footer">
-            <div class="row">
-               <div class="col-md-12 text-center">
-                  <iframe id="movie_trailer" width="500" height="315" src="#" frameborder="0" allowfullscreen></iframe>
+
+                  <!-- <iframe id="movie_trailer" width="500" height="315" src="#" frameborder="0" allowfullscreen></iframe> -->
                </div>
             </div>
          </div>
