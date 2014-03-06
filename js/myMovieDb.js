@@ -38,13 +38,11 @@ function myMovieDb(node) {
    // add dynamic table
    $('<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="movies" data-cls="movies"></table>').appendTo( node );
    $('#movies').dataTable( {
-      'aoColumns'  : [{'sTitle': 'TITLE',
-                       'mRender': renderTitle,
-                      },
+      'aoColumns'  : [{'sTitle': 'TITLE', 'mRender': renderTitle},
+                      {'sTitle': 'GENRE'},
                       {'sTitle': 'RATING', 'sWidth': '100px', 'bSearchable': false},
                       {'sTitle': 'YEAR','sWidth': '100px', 'bSearchable': false},
-                      {'sTitle': 'GENRE', 'bSearchable': false},
-                      {'sTitle': 'COUNTRY', 'bSearchable': false},
+                      {'sTitle': 'ADDED', 'sWidth': '100px', 'bSearchable': false},
                      ],
       'bProcessing': true,
       'bPaginate': false,

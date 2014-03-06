@@ -45,7 +45,11 @@ result = c.fetchall()
 
 movie_list = { 'aaData': [] }
 
+i = 0
+
 for movie in result:
+   
+   i = i + 1
    
    title_local = movie['title_local']
    title_original = movie['title_original']
@@ -70,6 +74,11 @@ for movie in result:
    set_id = movie['idSet']
    
    
+   c.execute('SELECT dateAdded FROM files WHERE idFile = ' + str(file_id) + ';')
+   movie_file = c.fetchone()   
+   
+   date_added = movie_file['dateAdded'].split(' ')[0]
+   
    movie_entry = {
       'title_local': title_local,
       'title_original': title_original,
@@ -88,7 +97,8 @@ for movie in result:
       'mpaa': mpaa,
       'country': country,
       'imdb_id': imdb_id,
-      'youtube_id': youtube_id }
+      'youtube_id': youtube_id,
+      'date_added': date_added }
    
    movie_file = open('data/' + str(movie_id) + '.json', 'w')
    movie_file.write(json.dumps(movie_entry,indent=2))
@@ -96,10 +106,10 @@ for movie in result:
    
    movie_list_enty = (
          title_local,
+         genre,
          rating,
          year,
-         genre,
-         country,
+         date_added,
          movie_id )
    
    movie_list['aaData'].append(movie_list_enty)
@@ -107,3 +117,5 @@ for movie in result:
 movie_list_file = open('data/movie_list.json', 'w')
 movie_list_file.write(json.dumps(movie_list,indent=2))
 movie_list_file.close()
+
+print "Exported " + str(i) + " Movies."
