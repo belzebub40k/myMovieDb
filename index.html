@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    
+    <title>myMovieDb</title>
+
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"> -->
+    <link rel="stylesheet" href="css/datatables.css">
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div class="row">
+         <div class="col-md-12">
+            <h1>myMovieDb</h1>
+            <small>CLICK ON A MOVIE TO GET FURTHER DETAILS</small>
+         </div>
+      </div>
+    </div>
+
+   <!-- Modal -->
+   <div class="modal" id="movie" tabindex="-1" role="dialog">
+     <div class="modal-dialog modal-lg">
+       <div class="modal-content">
+         <div class="modal-header">
+            
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+           <h3 class="modal-title" id="movie_title"></h3>
+           <small id="movie_title_original"></small>
+           
+         </div>
+         <div class="modal-body">
+            
+            <div class=row>
+               <div class="col-md-4">
+                  <p><img alt="poster" src="#" id="movie_poster" style="width:100%;height:auto;" /></p>
+               </div>
+               <div class="col-md-8">
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Country:</strong></div>
+                     <div class="col-md-10" id="movie_country">></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Director:</strong></div>
+                     <div class="col-md-10" id="movie_director"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Writer:</strong></div>
+                     <div class="col-md-10" id="movie_writers"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Studio:</strong></div>
+                     <div class="col-md-10" id="movie_studio"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Genre:</strong></div>
+                     <div class="col-md-10" id="movie_genre"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Year:</strong></div>
+                     <div class="col-md-10" id="movie_year"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Runtime:</strong></div>
+                     <div class="col-md-10" id="movie_runtime"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Rating:</strong></div>
+                     <div class="col-md-10" id="movie_rating"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>MPAA:</strong></div>
+                     <div class="col-md-10" id="movie_mpaa"></div>
+                  </div>
+                  <div class="row">
+                     &nbsp;
+                  </div>
+                  <div class="row">
+                     <div class="col-md-2 text-right"><strong>Plot:</strong></div>
+                     <div class="col-md-10 text-justify" id="movie_plot"></div>
+                  </div>
+
+               </div>
+            </div>
+
+            <div class="row">
+               <div class="col-md-12">
+
+                  <!-- <iframe id="movie_trailer" width="500" height="315" src="#" frameborder="0" allowfullscreen></iframe> -->
+               </div>
+            </div>
+         </div>
+            
+       </div>
+     </div>
+   </div>
+    
+    <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="js/datatables.js"></script>
+    <!-- <script src="js/jquery.floatThead.min.js"></script> -->
+    <script src="js/myMovieDb.js"></script>
+
+    <script type="text/javascript">
+
+      $(document).ready( myMovieDb('#main') );
+
+    </script>
+
+  </body>
+</html>
