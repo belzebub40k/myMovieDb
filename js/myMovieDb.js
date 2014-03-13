@@ -36,7 +36,8 @@ function rowClick() {
 function myMovieDb(node) {
    
    // add dynamic table
-   $('<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="movies" data-cls="movies"></table>').appendTo( node );
+   // cellpadding="0" cellspacing="0" border="0"
+   $('<table class="table table-striped table-bordered" id="movies" data-cls="movies"></table>').appendTo( node );
    $('#movies').dataTable( {
       'aoColumns'  : [{'sTitle': 'TITLE', 'mRender': renderTitle},
                       {'sTitle': 'GENRE'},
