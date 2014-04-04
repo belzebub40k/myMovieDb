@@ -41,13 +41,13 @@ c.execute('SELECT \
          FROM movie \
          ORDER BY title_local;')
 
-result = c.fetchall()
+result_movie = c.fetchall()
 
 movie_list = { 'aaData': [] }
 
 i = 0
 
-for movie in result:
+for movie in result_movie:
    
    i = i + 1
    
@@ -75,9 +75,34 @@ for movie in result:
    
    
    c.execute('SELECT dateAdded FROM files WHERE idFile = ' + str(file_id) + ';')
-   movie_file = c.fetchone()   
-   
-   date_added = movie_file['dateAdded'].split(' ')[0]
+   result_file = c.fetchone()   
+   date_added = result_file['dateAdded'].split(' ')[0]
+
+   c.execute('SELECT * FROM streamdetails WHERE idFile = ' + str(file_id) + ';')
+   result_stream = c.fetchall()
+
+   streams = []
+
+   for stream in result_stream:
+      stream_entry = {}
+
+      if stream['iStreamType'] == 0:
+         stream_entry['type'] = 'v'
+         stream_entry['codec'] = stream['strVideoCodec']
+         stream_entry['aspect'] = stream['fVideoAspect']
+         stream_entry['resolution'] = str(stream['iVideoWidth']) + 'x' + str(stream['iVideoHeight'])
+
+      if stream['iStreamType'] == 1: 
+         stream_entry['type'] = 'a'
+         stream_entry['codec'] = stream['strAudioCodec']
+         stream_entry['language'] = stream['strAudioLanguage']
+         stream_entry['channels'] = stream['iAudioChannels']
+
+      if stream['iStreamType'] == 2: 
+         stream_entry['type'] = 's'
+         stream_entry['language'] = stream['strSubtitleLanguage']
+
+      streams.append(stream_entry)
    
    movie_entry = {
       'title_local': title_local,
@@ -98,7 +123,8 @@ for movie in result:
       'country': country,
       'imdb_id': imdb_id,
       'youtube_id': youtube_id,
-      'date_added': date_added }
+      'date_added': date_added,
+      'streams': streams }
    
    movie_file = open('data/' + str(movie_id) + '.json', 'w')
    movie_file.write(json.dumps(movie_entry,indent=2))
