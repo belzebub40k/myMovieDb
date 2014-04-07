@@ -5,6 +5,28 @@ import sqlite3
 import json
 import re
 
+channel_map = {
+   0: '0.0',
+   1: '1.0',
+   2: '2.0',
+   3: '2.1',
+   4: '4.0',
+   5: '4.1',
+   6: '5.1',
+   7: '6.1',
+   8: '7.1',
+   10: '9.1' }
+
+def getResolution(width):
+   if width > 1280:
+      return 1080
+   elif width > 960:
+      return 720
+   elif width > 720:
+      return 540
+   else:
+      return 480
+
 def searchList(regex, target):
    result = []
    for item in target:
@@ -82,6 +104,7 @@ for movie in result_movie:
    result_stream = c.fetchall()
 
    streams = []
+   resolution = 0
 
    for stream in result_stream:
       stream_entry = {}
@@ -90,17 +113,18 @@ for movie in result_movie:
          stream_entry['type'] = 'v'
          stream_entry['codec'] = stream['strVideoCodec']
          stream_entry['aspect'] = stream['fVideoAspect']
-         stream_entry['resolution'] = str(stream['iVideoWidth']) + 'x' + str(stream['iVideoHeight'])
+         resolution = getResolution( stream['iVideoWidth'] )
+         stream_entry['resolution'] = resolution
 
       if stream['iStreamType'] == 1: 
          stream_entry['type'] = 'a'
          stream_entry['codec'] = stream['strAudioCodec']
-         stream_entry['language'] = stream['strAudioLanguage']
-         stream_entry['channels'] = stream['iAudioChannels']
+         stream_entry['language'] = stream['strAudioLanguage'].title()
+         stream_entry['channels'] = channel_map[ stream['iAudioChannels'] ]
 
       if stream['iStreamType'] == 2: 
          stream_entry['type'] = 's'
-         stream_entry['language'] = stream['strSubtitleLanguage']
+         stream_entry['language'] = stream['strSubtitleLanguage'].title()
 
       streams.append(stream_entry)
    
@@ -136,7 +160,8 @@ for movie in result_movie:
          rating,
          year,
          date_added,
-         movie_id )
+         movie_id,
+         resolution )
    
    movie_list['aaData'].append(movie_list_enty)
    

@@ -1,6 +1,7 @@
 // render title cell
 function renderTitle( data, type, row ) {
-   return '<b id=' + row[5] + '>' + data + '</b>';}
+   return   '<b id=' + row[5] + '>' + data + '</b>' +
+            '<img class="flags" src="media/lists/' + row[6] + '.png"/>';}
    
 // load movie information from file
 function loadMovie(id) {
@@ -21,7 +22,25 @@ function loadMovie(id) {
       $('#movie_country').text(movie.country);
       $('#movie_poster').attr('src', movie.thumbnails[0]);
       $('#movie_trailer').attr( 'src', 'https://www.youtube.com/embed/' + movie.youtube_id + '?wmode=transparent' );
-      
+      $('#movie_flags').html('');
+
+      $.each(movie.streams, function(idx,stream){
+         if(stream.type == "v") {
+            $('#movie_flags').append('<img class="flags" src="media/video/' + stream.codec + '.png" />');
+         }
+         if(stream.type == "a") {
+            if ( $('#' + stream.codec).length == 0 ) {
+               $('#movie_flags').append('<img id="' + stream.codec + '" class="flags" src="media/audio/' + stream.codec + '.png" />');
+               $('#' + stream.codec).attr('data-original-title', stream.language +' '+ stream.channels);
+               $('#' + stream.codec).attr('data-html', true);
+               $('#' + stream.codec).tooltip()
+            } else {
+               var prev_title = $('#' + stream.codec).attr('data-original-title');
+               $('#' + stream.codec).attr('data-original-title', prev_title +'<br/>'+ stream.language +' '+ stream.channels);
+            }
+         }
+      });
+
       $('#movie').modal('toggle');
    });
 }
