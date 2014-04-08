@@ -156,12 +156,12 @@ for movie in result_movie:
    
    movie_list_enty = (
          title_local,
+         #resolution,
          genre,
          rating,
          year,
          date_added,
-         movie_id,
-         resolution )
+         movie_id )
    
    movie_list['aaData'].append(movie_list_enty)
    

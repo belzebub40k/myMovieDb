@@ -1,8 +1,13 @@
 // render title cell
 function renderTitle( data, type, row ) {
-   return   '<b id=' + row[5] + '>' + data + '</b>' +
-            '<img class="flags" src="media/lists/' + row[6] + '.png"/>';}
-   
+   return '<b id=' + row[5] + '>' + data + '</b>';
+}
+
+/* render quality cell
+function renderQuality( data, type, row ) {
+   return '<img class="flags" src="media/lists/' + data + '.png"/>';
+} */
+
 // load movie information from file
 function loadMovie(id) {
    $.getJSON('data/' + id + '.json', function(movie) {
@@ -26,6 +31,7 @@ function loadMovie(id) {
 
       $.each(movie.streams, function(idx,stream){
          if(stream.type == "v") {
+            $('#movie_flags').append('<img class="flags" src="media/video/' + stream.resolution + '.png" />');
             $('#movie_flags').append('<img class="flags" src="media/video/' + stream.codec + '.png" />');
          }
          if(stream.type == "a") {
@@ -59,6 +65,7 @@ function myMovieDb(node) {
    $('<table class="table table-striped table-bordered" id="movies" data-cls="movies"></table>').appendTo( node );
    $('#movies').dataTable( {
       'aoColumns'  : [{'sTitle': 'TITLE', 'mRender': renderTitle},
+                      //{'sTitle': 'Q', 'mRender': renderQuality, 'bSearchable': false},
                       {'sTitle': 'GENRE'},
                       {'sTitle': 'RATING', 'sWidth': '100px', 'bSearchable': false},
                       {'sTitle': 'YEAR','sWidth': '100px', 'bSearchable': false},
