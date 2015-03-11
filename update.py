@@ -4,6 +4,7 @@
 import sqlite3
 import json
 import re
+import sys
 
 channel_map = {
    0: '0.0',
@@ -34,7 +35,7 @@ def searchList(regex, target):
          result.append(item)
    return result
 
-conn = sqlite3.connect('MyVideos75.db')
+conn = sqlite3.connect( sys.argv[1] )
 conn.row_factory = sqlite3.Row
 
 c = conn.cursor()
@@ -115,6 +116,7 @@ for movie in result_movie:
          stream_entry['aspect'] = stream['fVideoAspect']
          resolution = getResolution( stream['iVideoWidth'] )
          stream_entry['resolution'] = resolution
+         stream_entry['stereo'] = stream['strStereoMode']
 
       if stream['iStreamType'] == 1: 
          stream_entry['type'] = 'a'

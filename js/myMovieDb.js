@@ -33,6 +33,7 @@ function loadMovie(id) {
          if(stream.type == "v") {
             $('#movie_flags').append('<img class="flags" src="media/video/' + stream.resolution + '.png" />');
             $('#movie_flags').append('<img class="flags" src="media/video/' + stream.codec + '.png" />');
+            if(stream.stereo != "") { $('#movie_flags').append('<img class="flags" src="media/video/3D.png" />'); }
          }
          if(stream.type == "a") {
             if ( $('#' + stream.codec).length == 0 ) {
