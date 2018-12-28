@@ -44,15 +44,12 @@ c.execute('SELECT \
             c00 AS title_local, \
             c01 AS plot, \
             c03 AS plot_outline, \
-            c04 AS rating_votes, \
-            c05 AS rating, \
+            c05 AS rating_id, \
             c06 AS writers, \
-            c07 AS year, \
             c08 AS thumbnails, \
-            c09 AS imdb_id, \
+            c09 AS ident_id, \
             c11 AS runtime, \
             c12 AS mpaa, \
-            c13 AS imdb_top250, \
             c14 AS genre, \
             c15 AS director, \
             c16 AS title_original, \
@@ -60,7 +57,10 @@ c.execute('SELECT \
             c19 AS trailer, \
             c20 AS fanart, \
             c21 AS country, \
-            idMovie,idFile,idSet \
+            premiered, \
+            idMovie, \
+            idFile, \
+            idSet \
          FROM movie \
          ORDER BY title_local;')
 
@@ -81,17 +81,15 @@ for movie in result_movie:
    writers = movie['writers']
    director = movie['director']
    studio = movie['studio']
-   thumbnails = searchList('w500', re.findall('http.*?\.jpg', movie['thumbnails']) )
-   fanart = searchList('w780', re.findall('http.*?\.jpg', movie['fanart']) )
-   rating = movie['rating'].rstrip('0').rstrip('.')
-   rating_votes = re.sub(',', '.', movie['rating_votes'])
+   thumbnails = searchList('w500', re.findall(r'http.*?\.jpg', movie['thumbnails']) )
+   fanart = searchList('w780', re.findall(r'http.*?\.jpg', movie['fanart']) )
    runtime = "%02d" % divmod(int(movie['runtime']), 60)[0]
-   year = movie['year']
    genre = movie['genre']
    country = movie['country']
    mpaa = movie['mpaa']
-   imdb_id = movie['imdb_id']
+   ident_id = movie['ident_id']
    youtube_id = re.sub('&.*', '', re.sub('.*videoid=', '', movie['trailer']) )
+   premiered = movie['premiered']
    movie_id = movie['idMovie']
    file_id = movie['idFile']
    set_id = movie['idSet']
@@ -100,6 +98,13 @@ for movie in result_movie:
    c.execute('SELECT dateAdded FROM files WHERE idFile = ' + str(file_id) + ';')
    result_file = c.fetchone()   
    date_added = result_file['dateAdded'].split(' ')[0]
+
+
+   c.execute('SELECT * FROM rating WHERE media_id = ' + str(movie_id) + ' AND rating_type = "imdb";')
+   result_rating = c.fetchone()
+   rating = result_rating['rating']
+   votes = result_rating['votes']
+
 
    c.execute('SELECT * FROM streamdetails WHERE idFile = ' + str(file_id) + ';')
    result_stream = c.fetchall()
@@ -141,15 +146,15 @@ for movie in result_movie:
       'thumbnails': thumbnails,
       'fanart': fanart,
       'runtime': runtime,
-      'rating': rating,
-      'rating_votes': rating_votes,
-      'year': year,
       'genre': genre,
       'mpaa': mpaa,
       'country': country,
-      'imdb_id': imdb_id,
+      'premiered': premiered,
+      'ident_id': ident_id,
       'youtube_id': youtube_id,
       'date_added': date_added,
+      'rating': rating,
+      'votes': votes,
       'streams': streams }
    
    movie_file = open('data/' + str(movie_id) + '.json', 'w')
@@ -158,10 +163,9 @@ for movie in result_movie:
    
    movie_list_enty = (
          title_local,
-         #resolution,
          genre,
          rating,
-         year,
+         premiered[0:4],
          date_added,
          movie_id )
    
@@ -171,4 +175,4 @@ movie_list_file = open('data/movie_list.json', 'w')
 movie_list_file.write(json.dumps(movie_list,indent=2))
 movie_list_file.close()
 
-print "Exported " + str(i) + " Movies."
+print("Exported " + str(i) + " Movies.")
